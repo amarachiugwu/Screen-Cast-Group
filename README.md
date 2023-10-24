@@ -1,4 +1,4 @@
 # ScreenCast
 
 This is a repository for my youtube channel 
-https://youtube.com/@amarachiugwu_
+[YOUTUBE CHANNEL](https://youtube.com/@amarachiugwu_)
